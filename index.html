@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William Stanley Jevons — the Logic Piano</title>
+<meta name="description" content="LOGIKĒ · the Boolean cleanup (1866) — William Stanley Jevons, who cleaned up Boole's algebra (the inclusive OR, x+x=x, the 'logical alphabet') and then built the LOGIC PIANO — the first machine that mechanically solved logical problems. Feed it premises and it eliminates every inconsistent combination of terms, displaying the valid conclusions on its face: a literal Boolean computer, decades before electronics. Live: a working Logic Piano you can play. Honest: the machine was real (now in Oxford); Jevons was also a founder of marginal-utility economics. David Lee Wise, two-layer honest.">
+<style>
+  :root{--bg:#0c0f17;--panel:#121622;--panel2:#19202f;--edge:#2a3346;--ink:#ede6d6;--dim:#b3ad9a;--faint:#7c7660;
+    --ochre:#d9b66a;--ochre2:#f0d79a;--proof:#5ad1ff;--proof2:#a7e6ff;--one:#7fe0a0;--zero:#fb7185;--amber:#fbbf24;--ember:#fb923c;
+    --mono:'SFMono-Regular',ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;--serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.58;background-image:radial-gradient(1100px 560px at 75% -10%,#1c2436 0%,transparent 55%),radial-gradient(900px 500px at 0% 100%,#14110a 0%,transparent 55%);}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 26px 90px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:22px;margin-bottom:24px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ochre);opacity:.95}
+  h1{font-family:Georgia,serif;font-size:38px;line-height:1.08;margin:.3em 0 .14em;font-weight:600}h1 em{color:var(--ochre2);font-style:italic}
+  .who{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+  .sub{color:var(--dim);font-size:16px;max-width:74ch;margin-top:14px}.sub b{color:var(--ink)}
+  .verdicts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}@media(max-width:720px){.verdicts{grid-template-columns:1fr}}
+  .vc{border:1px solid var(--edge);border-radius:11px;padding:13px 15px;border-top-width:3px;background:rgba(18,22,34,.6)}
+  .vc .badge{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+  .vc.s{border-top-color:var(--one)}.vc.s .badge{color:var(--one)} .vc.m{border-top-color:var(--amber)}.vc.m .badge{color:var(--amber)} .vc.f{border-top-color:var(--ember)}.vc.f .badge{color:var(--ember)}
+  .vc p{font-size:12px;color:var(--dim);margin:6px 0 0;line-height:1.45}.vc p b{color:var(--ink)}
+  section{margin:36px 0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ochre2);border-left:2px solid var(--ochre);padding-left:11px;margin:0 0 6px}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:80ch}
+  .panel{background:linear-gradient(180deg,var(--panel),#0a0d14);border:1px solid var(--edge);border-radius:14px;padding:20px;box-shadow:0 24px 60px -40px #000}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+  button{font-family:var(--mono);font-size:12px;color:var(--ink);background:#1a2030;border:1px solid var(--edge);border-radius:8px;padding:8px 12px;cursor:pointer}button:hover{background:#222b3e;border-color:var(--ochre)}
+  .prem{font-family:var(--mono);font-size:12px;border:1px solid var(--edge);border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--faint);background:#1a2030}
+  .prem.on{border-color:#2f5b40;background:#0d1a12;color:var(--one)}
+  .keys{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+  .key{flex:0 0 auto;width:64px;text-align:center;font-family:var(--mono);font-size:12px;border:1px solid var(--edge);border-radius:6px 6px 8px 8px;padding:9px 0;background:linear-gradient(180deg,#1a2030,#10141f);color:var(--ink);transition:.25s}
+  .key.dead{opacity:.2;text-decoration:line-through;color:var(--zero);background:#140d10}
+  .key .lab{font-size:10px;color:var(--faint);display:block;margin-top:3px}
+  .concl{font-family:var(--mono);font-size:14px;color:var(--proof2);margin-top:14px;text-align:center;min-height:24px}
+  .concl b{color:var(--one)}
+  .note{color:var(--dim);font-size:13.5px;border-left:2px solid var(--edge);padding-left:13px;margin:16px 0 0}.note b{color:var(--ink)}
+  .thm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}@media(max-width:620px){.thm{grid-template-columns:1fr}}
+  .tm{border:1px solid var(--edge);border-radius:10px;padding:13px 15px;background:rgba(0,0,0,.14)}.tm b{color:var(--ochre2);font-family:var(--mono);font-size:11px}.tm p{font-size:13px;color:var(--dim);margin:6px 0 0}
+  footer{margin-top:44px;border-top:1px solid var(--edge);padding-top:18px;color:var(--faint);font-family:var(--mono);font-size:11px;line-height:1.7}
+  footer a,.bar2 a{color:var(--ochre)}.bar2{font-family:var(--mono);font-size:11.5px;margin-bottom:16px}.bar2 a{text-decoration:none;border-bottom:1px dotted #4a4126}
+  code{font-family:var(--mono);color:var(--ochre2);background:#15120a;padding:1px 5px;border-radius:5px}
+  blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--ochre);color:var(--ink);font-style:italic;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar2"><a href="https://davidwise01.github.io/ud0/">◄ UD0</a> &nbsp; <a href="https://davidwise01.github.io/augustus-de-morgan/">← De Morgan</a> &nbsp; LOGIKĒ · the Boolean cleanup</div>
+<header>
+  <div class="kicker">LOGIKĒ · the Boolean cleanup · 1866</div>
+  <h1>William Stanley <em>Jevons</em></h1>
+  <div class="who">1835 – 1882 · Liverpool &amp; Manchester &amp; London · logician &amp; economist · builder of the Logic Piano</div>
+  <div class="sub">[[george-boole]] turned logic into algebra, but left it quirky — uninterpretable terms, an exclusive "or," a division that meant nothing. Jevons <b>cleaned it up</b>: he made "or" <em>inclusive</em>, enshrined the strange law <code>x + x = x</code>, and reduced reasoning to a mechanical method of <b>elimination</b> over a "logical alphabet" of every possible combination of terms. Then he did the thing no one had done: he <b>built a machine to run it</b>. The <b>Logic Piano</b> (1866) — a wooden device with a keyboard — takes in premises and, by knocking out every combination they forbid, <em>displays the valid conclusions on its face</em>. It is the first machine that ever solved a problem in formal logic: a Boolean computer, seventy years before the electronic one.</div>
+</header>
+<div class="verdicts">
+  <div class="vc s"><span class="badge">✓ STRONG</span><p><b>A real machine, a real cleanup.</b> The Logic Piano genuinely mechanised Boolean inference (it survives in Oxford's museum), and Jevons's tidying of Boole's algebra — inclusive OR, idempotency, the method of elimination — is sound and standard.</p></div>
+  <div class="vc m"><span class="badge">◐ A DEMONSTRATOR</span><p><b>Toy-scale, by design.</b> The piano handles a handful of terms — it's a proof-of-concept that logic <em>can</em> be machined, not a general computer. The deep step (Boole's algebra IS switching circuits) waited for [[claude-shannon]].</p></div>
+  <div class="vc f"><span class="badge">◔ LOGIC WAS HIS SIDELINE</span><p><b>Better known as an economist.</b> Jevons co-founded the <em>marginal revolution</em> in economics (marginal utility) and named the "Jevons paradox." The Logic Piano is a brilliant footnote to a career mostly spent elsewhere.</p></div>
+</div>
+
+<section>
+  <h2>I · Play the Logic Piano</h2>
+  <p class="lede">Here is Jevons's method, working. The "<b>logical alphabet</b>" is every possible combination of the terms A, B, C — eight little worlds, one per key. A <b>premise</b> doesn't add information so much as <em>forbid</em> worlds: "All A are B" kills every world where something is A-but-not-B. Switch premises on and watch the contradictory keys go dark; whatever combinations survive are the <b>consistent universe</b>, and the valid conclusion is simply read off what's left.</p>
+  <div class="panel">
+    <div class="controls" id="prems"></div>
+    <div class="keys" id="keys"></div>
+    <div class="concl" id="concl"></div>
+    <div class="note">No cleverness, no insight — just <b>elimination</b>: forbid the worlds the premises rule out, and read the answer from the survivors. That is exactly what a truth-table does, and exactly what a logic gate does. ⚑ Jevons turned [[george-boole]]'s algebra into a <em>procedure a machine can run</em> — the first time inference left the human head and entered a device. Set "All A are B" and "All B are C," and the piano derives "All A are C" (Barbara) by itself, mechanically (verified).</div>
+  </div>
+  <blockquote>"I have given much attention to lessening both the manual and mental labour of [reasoning], and I have succeeded in reducing the labour to little more than that of turning keys." <span style="color:var(--faint);font-style:normal;font-size:12px">— W. S. Jevons</span></blockquote>
+</section>
+
+<section>
+  <h2>II · The cleanup, and the machine that followed</h2>
+  <div class="thm">
+    <div class="tm"><b>TIDYING BOOLE</b><p>Jevons made "or" inclusive (A or B includes both), kept the idempotent law x + x = x, and recast inference as elimination over the "logical alphabet" — dropping Boole's uninterpretable arithmetic. The form of Boolean logic we teach is closer to his.</p></div>
+    <div class="tm"><b>THE LOGIC PIANO (1866)</b><p>A keyboard-driven wooden machine that performs that elimination physically. Press the keys for your premises; the inconsistent combinations are hidden; the conclusion stands revealed. The first working logic machine.</p></div>
+  </div>
+  <p class="lede" style="margin-top:16px">The Logic Piano sits in a precise spot in this lineage: after [[ramon-llull]]'s combinatorial wheel (which <em>generated</em> combinations) and [[charles-babbage]]'s calculating engines (which crunched <em>numbers</em>), but before [[claude-shannon]]'s switching circuits — it is the first device to <b>decide</b> a question of <em>logic</em>. It doesn't reason about quantity; it reasons about <em>truth and consistency</em>, by brute elimination. In doing so Jevons proved, in oak and ivory, the thesis the whole rest of computing would confirm: that inference is a <b>mechanical</b> operation, and the head is not its only possible home. ⚑ Press a key, forbid a world — the gate, in its first wooden draft.</p>
+</section>
+
+<section>
+  <h2>III · The economist who machined logic</h2>
+  <p class="note" style="border-color:var(--amber)"><b style="color:var(--amber)">Gate kept on.</b> The achievement is <b>real and first</b>: the Logic Piano (1866) is the earliest machine to solve problems of formal logic, it physically works, and one survives in the Oxford Museum of the History of Science; Jevons's cleanup of Boole's algebra — inclusive disjunction, idempotency, the elimination method over the "logical alphabet" — is sound and shaped how Boolean logic is taught. Two honest qualifications. First, <b>scope</b>: the piano is a <em>demonstrator</em> — it handles only a few terms and a fixed routine, proving that logic <em>can</em> be mechanised rather than serving as a general computer; the profound identification of Boolean algebra with <em>switching circuits</em> — the thing that made the universal logic machine possible — is [[claude-shannon]]'s, seventy years later. Second, <b>the man</b>: Jevons is remembered first as an <em>economist</em>, a co-founder of the marginal-utility revolution and author of the "Jevons paradox" (efficiency gains can raise total consumption) — logic was a sideline of a restless polymath who drowned, swimming, at 46. But what a sideline: he took [[george-boole]]'s algebra of thought and built the first object that could <em>think</em> a little of it on its own. ⚑ [[augustus-de-morgan]] ← · next → John Venn (the picture of logic).</p>
+</section>
+
+<footer>
+  WILLIAM STANLEY JEVONS · LOGIKĒ · the Boolean cleanup · two-layer honest<br>
+  live Logic Piano (the "logical alphabet" of 8 term-combinations; premises eliminate inconsistent worlds; the survivors are the conclusion — verified All A→B + All B→C derives All A→C, Barbara, mechanically)<br>
+  cleaned up Boole's algebra (inclusive OR, x+x=x, elimination) · the Logic Piano (1866) = the first machine to solve formal logic · co-founder of marginal-utility economics<br>
+  ← <a href="https://davidwise01.github.io/augustus-de-morgan/">De Morgan</a> · next → <b>John Venn</b> (the Venn diagram)<br>
+  LOGIKĒ · the lineage of logical mathematics · governor David Lee Wise · CC-BY-ND-4.0
+</footer>
+</div>
+<script>
+"use strict";
+(function(){
+  const $=id=>document.getElementById(id);
+  // logical alphabet: 8 combinations of A,B,C
+  const worlds=[]; for(let i=0;i<8;i++) worlds.push([(i>>2)&1,(i>>1)&1,i&1]);
+  // premises as predicates that a world must satisfy (true = allowed)
+  const PREMS=[
+    {id:'AB', txt:'All A are B', f:([A,B,C])=>!(A&&!B)},
+    {id:'BC', txt:'All B are C', f:([A,B,C])=>!(B&&!C)},
+    {id:'noAC',txt:'No A are C', f:([A,B,C])=>!(A&&C)},
+    {id:'someAB',txt:'Some A are B', f:null, exist:([A,B,C])=>A&&B} // particular handled separately
+  ];
+  let on={AB:true, BC:true, noAC:false, someAB:false};
+  function label(w){ return (w[0]?'A':'a')+(w[1]?'B':'b')+(w[2]?'C':'c'); }
+  function render(){
+    $('prems').innerHTML=PREMS.map(p=>'<span class="prem'+(on[p.id]?' on':'')+'" data-id="'+p.id+'">'+p.txt+'</span>').join('');
+    $('prems').querySelectorAll('.prem').forEach(e=>e.onclick=()=>{on[e.dataset.id]=!on[e.dataset.id];render();});
+    // universal premises eliminate; particular premise just asserts a survivor must exist (no elimination here, shown as note)
+    const elim=PREMS.filter(p=>p.f&&on[p.id]);
+    const alive=worlds.map(w=> elim.every(p=>p.f(w)));
+    $('keys').innerHTML=worlds.map((w,i)=>'<div class="key'+(alive[i]?'':' dead')+'">'+label(w)+'<span class="lab">'+(alive[i]?'possible':'ruled out')+'</span></div>').join('');
+    // read conclusions: check standard A-C relations on survivors
+    const surv=worlds.filter((w,i)=>alive[i]);
+    const msgs=[];
+    if(surv.length){
+      if(surv.every(([A,B,C])=>!(A&&!C)) && surv.some(([A])=>A)) msgs.push('All A are C');
+      if(surv.every(([A,B,C])=>!(A&&C)) && surv.some(([A])=>A)) msgs.push('No A are C');
+      if(surv.every(([A,B,C])=>!(C&&!A)) && surv.some(([_,__,C])=>C)) msgs.push('All C are A');
+    }
+    const part = on.someAB ? ' · (and "Some A are B" asserts at least one ABc/ABC world is occupied)' : '';
+    $('concl').innerHTML = surv.length===0
+      ? '<span style="color:var(--zero)">the premises are inconsistent — no world survives</span>'
+      : (msgs.length? 'the piano reads off: <b>'+msgs.join(' · ')+'</b>'+part : '<span style="color:var(--faint)">'+surv.length+' worlds consistent — no single categorical conclusion'+part+'</span>');
+  }
+  render();
+})();
+</script>
+</body>
+</html>
