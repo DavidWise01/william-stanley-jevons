@@ -4,6 +4,6 @@ slug  : william-stanley-jevons
 seal  : f684adf82836c3ccc657e22a0882a2b00ddc04facd68ec78ca239ef8e254253b
 prev  : 7f47aca6a5f30ae0a44a9aa399fc3c8c6cf42376ec0e77a9300516ddc6f43fbf
 link  : 14ccaae65aef04ebac8966fb7cc0579669ab093f4b29b4e97f96dfe2f1c76a93
-head  : 3447d3a0533aaf1e29a8bdc67a9774884fb3ae9dbc8a17064b7a008ca3c4ec90
+head  : 13f9ace173ef2e60af38912ba329b4afcb5a38b84a0e4495e8d30327f8c99cc2
 
 — the tether: link = sha256(index|slug|seal|prev). the chain head commits to the whole corpus.
